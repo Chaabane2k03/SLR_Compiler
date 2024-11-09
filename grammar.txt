@@ -1,29 +1,61 @@
 statements  : statement NEWLINE statements
             | statement
 
-statement   : KEYWORD:return expr?
+statement   : KEYWORD:return expr
             | KEYWORD:continue
             | KEYWORD:break
             | expr
 
 expr        : KEYWORD:var IDENTIFIER EQ expr
-            | comp-expr ((KEYWORD:and|KEYWORD:or) comp-expr)*
+            | comp-expr expr-tail
+
+expr-tail   : KEYWORD:and comp-expr expr-tail
+            | KEYWORD:or comp-expr expr-tail
+            | ε
 
 comp-expr   : not comp-expr
-            | arith-expr ((EE|LT|GT|LTE|GTE) arith-expr)*
+            | arith-expr comp-expr-tail
 
-arith-expr  : term ((PLUS|MINUS) term)*
+comp-expr-tail : EE arith-expr comp-expr-tail
+               | LT arith-expr comp-expr-tail
+               | GT arith-expr comp-expr-tail
+               | LTE arith-expr comp-expr-tail
+               | GTE arith-expr comp-expr-tail
+               | ε
 
-term        : factor ((MUL|DIV) factor)*
+arith-expr  : term arith-expr-tail
 
-factor      : (PLUS|MINUS) factor
+arith-expr-tail : PLUS term arith-expr-tail
+                | MINUS term arith-expr-tail
+                | ε
+
+term        : factor term-tail
+
+term-tail   : MUL factor term-tail
+            | DIV factor term-tail
+            | ε
+
+factor      : PLUS factor 
+            | MINUS factor
             | power
 
-power       : call (POW factor)*
+power       : call power-tail
 
-call        : atom (LPAREN (expr (COMMA expr)*)? RPAREN)?
+power-tail  : POW factor power-tail
+            | ε
 
-atom        : INT|FLOAT|STRING|IDENTIFIER
+call        : atom call-tail
+
+call-tail   : LPAREN expr call-tail-tail RPAREN
+            | ε
+
+call-tail-tail : COMMA expr call-tail-tail
+               | ε
+
+atom        : INT
+            | FLOAT
+            | STRING
+            | IDENTIFIER
             | LPAREN expr RPAREN
             | list-expr
             | if-expr
@@ -31,30 +63,38 @@ atom        : INT|FLOAT|STRING|IDENTIFIER
             | while-expr
             | func-def
 
-list-expr   : LSQUARE (expr (COMMA expr)*)? RSQUARE
+list-expr   : LSQUARE list-expr-tail RSQUARE
 
-if-expr     : KEYWORD:if expr KEYWORD:then
-              statement if-expr-b? if-expr-c?
-            | (NEWLINE statements KEYWORD:end if-expr-b? if-expr-c?)
+list-expr-tail : expr list-expr-tail-next
+               | ε
 
-if-expr-b   : KEYWORD:elseif expr KEYWORD:then
-              statement if-expr-b? if-expr-c?
-            | (NEWLINE statements KEYWORD:end if-expr-b? if-expr-c?)
+list-expr-tail-next : COMMA expr list-expr-tail-next
+                    | ε
 
-if-expr-c   : KEYWORD:else
-              statement
-            | (NEWLINE statements KEYWORD:end)
+if-expr     : KEYWORD:if expr KEYWORD:then statement if-expr-b if-expr-c
+            | NEWLINE statements KEYWORD:end if-expr-b if-expr-c
 
-for-expr    : KEYWORD:for IDENTIFIER EQ expr KEYWORD:to expr
-              (KEYWORD:step expr)? KEYWORD:do
-              statement
-            | (NEWLINE statements KEYWORD:end)
+if-expr-b   : KEYWORD:elseif expr KEYWORD:then statement if-expr-b if-expr-c
+            | NEWLINE statements KEYWORD:end if-expr-b if-expr-c
+            | ε
 
-while-expr  : KEYWORD:while expr KEYWORD:do
-              statement
-            | (NEWLINE statements KEYWORD:end)
+if-expr-c   : KEYWORD:else statement
+            | NEWLINE statements KEYWORD:end
+            | ε
 
-func-def    : KEYWORD:function IDENTIFIER?
-              LPAREN (IDENTIFIER (COMMA IDENTIFIER)*)? RPAREN
-              (ARROW expr)
-            | (NEWLINE statements KEYWORD:end)
+for-expr    : KEYWORD:for IDENTIFIER EQ expr KEYWORD:to expr KEYWORD:step expr KEYWORD:do statement
+            | KEYWORD:for IDENTIFIER EQ expr KEYWORD:to expr KEYWORD:do statement
+            | NEWLINE statements KEYWORD:end
+
+while-expr  : KEYWORD:while expr KEYWORD:do statement
+            | NEWLINE statements KEYWORD:end
+
+func-def    : KEYWORD:function IDENTIFIER LPAREN func-def-params RPAREN ARROW expr
+            | KEYWORD:function LPAREN func-def-params RPAREN ARROW expr
+            | NEWLINE statements KEYWORD:end
+
+func-def-params : IDENTIFIER func-def-params-tail
+                | ε
+
+func-def-params-tail : COMMA IDENTIFIER func-def-params-tail
+                     | ε
