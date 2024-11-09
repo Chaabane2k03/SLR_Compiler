@@ -1,4 +1,5 @@
-statements  : NEWLINE* statement (NEWLINE+ statement)* NEWLINE*
+statements  : statement NEWLINE statements
+            | statement
 
 statement   : KEYWORD:return expr?
             | KEYWORD:continue
