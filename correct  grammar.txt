@@ -65,14 +65,7 @@ E : E MUL E
   | E NE E
   | E AND E
   | E OR E
-  | E BAND E
-  | E BOR E
-  | E BXOR E
-  | E SRL E
-  | E SRA E
-  | E SLL E
   | NOT E
-  | BNOT E
   | LPAREN E RPAREN
   | I AFFECT E
   | INTVAL
