@@ -18,7 +18,7 @@ data_type : TOK_INT
           | TOK_VOID
           ;
 
-type_declarations : variable_declaration
+declarations : variable_declaration
                  | type_declarations TOK_COMMA variable_declaration
                  ;
 
