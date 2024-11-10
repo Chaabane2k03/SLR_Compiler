@@ -66,3 +66,33 @@ FOLLOW(<expression_logique>) = { ; , THEN , TO , DO , OPARTH , OPLOG}
 FOLLOW(<type>) = {;}
 FOLLOW(<identifier>) = {; , : , := , ; , THEN , TO , DO , OPARTH, OPLOG }
 -----------------------------------------------------------------
+
+
+
+PR ::= PROGRAM ID ';' B '.'
+
+B ::= VAR D BEGIN I END
+
+I ::= A ';' I | ε
+
+D ::= ID ':' T ';' D | ε
+
+A ::= ID ':=' Ex
+
+C ::= IF Ex THEN I | IF Ex THEN I ELSE I
+
+L ::= WHILE Ex DO I | FOR ID ':=' Ex TO Ex DO I
+
+P ::= PROCEDURE ID ';' B END ';'
+
+F ::= FUNCTION ID ':' T ';' B END ';'
+
+Ex ::= INTEGER | ID | EA | EL
+
+EA ::= Ex OPARTH Ex | INTEGER
+
+EL ::= Ex OPLOG Ex | 'NOT' Ex
+
+T ::= INTEGER | REAL | BOOLEAN
+
+ID ::= IDENT
