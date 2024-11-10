@@ -1,93 +1,93 @@
-program : listdeclnonnull maindecl
-        | maindecl
-        ;
+program_declaration : declaration_list_non_empty main_function_declaration
+                    | main_function_declaration
+                    ;
 
-listdecl : listdeclnonnull
-         | 
-         ;
+declaration_list : declaration_list_non_empty
+                 | 
+                 ;
 
-listdeclnonnull : vardecl
-               | listdeclnonnull vardecl
+declaration_list_non_empty : variable_declaration
+                           | declaration_list_non_empty variable_declaration
+                           ;
+
+variable_declaration : data_type type_declarations TOK_SEMICOL
+                    ;
+
+data_type : TOK_INT
+          | TOK_BOOL
+          | TOK_VOID
+          ;
+
+type_declarations : variable_declaration
+                 | type_declarations TOK_COMMA variable_declaration
+                 ;
+
+variable_declaration : ident
+                    | ident TOK_AFFECT expression
+                    ;
+
+main_function_declaration : data_type ident TOK_LPAR TOK_RPAR code_block
+                           ;
+
+statement_list : non_empty_statement_list
+               | 
                ;
 
-vardecl : type listtypedecl TOK_SEMICOL
-        ;
+non_empty_statement_list : statement
+                         | non_empty_statement_list statement
+                         ;
 
-type : TOK_INT
-     | TOK_BOOL
-     | TOK_VOID
-     ;
+statement : expression TOK_SEMICOL
+          | TOK_IF TOK_LPAR expression TOK_RPAR statement TOK_ELSE statement
+          | TOK_IF TOK_LPAR expression TOK_RPAR statement
+          | TOK_WHILE TOK_LPAR expression TOK_RPAR statement
+          | TOK_FOR TOK_LPAR expression TOK_SEMICOL expression TOK_SEMICOL expression TOK_RPAR statement
+          | TOK_DO statement TOK_WHILE TOK_LPAR expression TOK_RPAR TOK_SEMICOL
+          | code_block
+          | TOK_SEMICOL
+          | TOK_PRINT TOK_LPAR print_parameter_list TOK_RPAR TOK_SEMICOL
+          ;
 
-listtypedecl : decl
-            | listtypedecl TOK_COMMA decl
-            ;
-
-decl : ident
-     | ident TOK_AFFECT expr
-     ;
-
-maindecl : type ident TOK_LPAR TOK_RPAR block
-         ;
-
-listinst : listinstnonnull
-         | 
-         ;
-
-listinstnonnull : inst
-               | listinstnonnull inst
-               ;
-
-inst : expr TOK_SEMICOL
-     | TOK_IF TOK_LPAR expr TOK_RPAR inst TOK_ELSE inst
-     | TOK_IF TOK_LPAR expr TOK_RPAR inst
-     | TOK_WHILE TOK_LPAR expr TOK_RPAR inst
-     | TOK_FOR TOK_LPAR expr TOK_SEMICOL expr TOK_SEMICOL expr TOK_RPAR inst
-     | TOK_DO inst TOK_WHILE TOK_LPAR expr TOK_RPAR TOK_SEMICOL
-     | block
-     | TOK_SEMICOL
-     | TOK_PRINT TOK_LPAR listparamprint TOK_RPAR TOK_SEMICOL
-     ;
-
-block : TOK_LACC listdecl listinst TOK_RACC
-      ;
-
-expr : expr TOK_MUL expr
-     | expr TOK_DIV expr
-     | expr TOK_PLUS expr
-     | expr TOK_MINUS expr
-     | expr TOK_MOD expr
-     | expr TOK_LT expr
-     | expr TOK_GT expr
-     | TOK_MINUS expr
-     | expr TOK_GE expr
-     | expr TOK_LE expr
-     | expr TOK_EQ expr
-     | expr TOK_NE expr
-     | expr TOK_AND expr
-     | expr TOK_OR expr
-     | expr TOK_BAND expr
-     | expr TOK_BOR expr
-     | expr TOK_BXOR expr
-     | expr TOK_SRL expr
-     | expr TOK_SRA expr
-     | expr TOK_SLL expr
-     | TOK_NOT expr
-     | TOK_BNOT expr
-     | TOK_LPAR expr TOK_RPAR
-     | ident TOK_AFFECT expr
-     | TOK_INTVAL
-     | TOK_TRUE
-     | TOK_FALSE
-     | ident
-     ;
-
-listparamprint : listparamprint TOK_COMMA paramprint
-              | paramprint
-              ;
-
-paramprint : ident
-           | TOK_STRING
+code_block : TOK_LACC declaration_list statement_list TOK_RACC
            ;
+
+expression : expression TOK_MUL expression
+          | expression TOK_DIV expression
+          | expression TOK_PLUS expression
+          | expression TOK_MINUS expression
+          | expression TOK_MOD expression
+          | expression TOK_LT expression
+          | expression TOK_GT expression
+          | TOK_MINUS expression
+          | expression TOK_GE expression
+          | expression TOK_LE expression
+          | expression TOK_EQ expression
+          | expression TOK_NE expression
+          | expression TOK_AND expression
+          | expression TOK_OR expression
+          | expression TOK_BAND expression
+          | expression TOK_BOR expression
+          | expression TOK_BXOR expression
+          | expression TOK_SRL expression
+          | expression TOK_SRA expression
+          | expression TOK_SLL expression
+          | TOK_NOT expression
+          | TOK_BNOT expression
+          | TOK_LPAR expression TOK_RPAR
+          | ident TOK_AFFECT expression
+          | TOK_INTVAL
+          | TOK_TRUE
+          | TOK_FALSE
+          | ident
+          ;
+
+print_parameter_list : print_parameter_list TOK_COMMA print_parameter
+                    | print_parameter
+                    ;
+
+print_parameter : ident
+               | TOK_STRING
+               ;
 
 ident : TOK_IDENT
       ;
