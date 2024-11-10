@@ -1,13 +1,13 @@
-P : DL_non_empty MF
+P : DLN MF
   | MF
   ;
 
-DL : DL_non_empty
+DL : DLN
    | ε
    ;
 
-DL_non_empty : VD
-             | DL_non_empty VD
+DLN : VD
+             | DLN VD
              ;
 
 VD : DT VDL SEMICOL
