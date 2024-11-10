@@ -1,100 +1,25 @@
-statements  : statement NEWLINE statements
-            | statement
+<programme> ::= PROGRAM <nom_programme> ';' <bloc> '.'
 
-statement   : KEYWORD:return expr
-            | KEYWORD:continue
-            | KEYWORD:break
-            | expr
+<bloc> ::= VAR <declaration_variable> BEGIN <instruction> END
 
-expr        : KEYWORD:var IDENTIFIER EQ expr
-            | comp-expr expr-tail
+<declaration_variable> ::= <nom_variable> ':' <type> ';' | <declaration_variable> <nom_variable> ':' <type> ';'
 
-expr-tail   : KEYWORD:and comp-expr expr-tail
-            | KEYWORD:or comp-expr expr-tail
-            | ε
+<instruction> ::= <assignation> | <condition> | <boucle> | <procedure> | <fonction> 
 
-comp-expr   : not comp-expr
-            | arith-expr comp-expr-tail
+<assignation> ::= <nom_variable> ':=' <expression>
 
-comp-expr-tail : EE arith-expr comp-expr-tail
-               | LT arith-expr comp-expr-tail
-               | GT arith-expr comp-expr-tail
-               | LTE arith-expr comp-expr-tail
-               | GTE arith-expr comp-expr-tail
-               | ε
+<condition> ::= IF <expression> THEN <instruction> [ELSE <instruction>]
 
-arith-expr  : term arith-expr-tail
+<boucle> ::= WHILE <expression> DO <instruction> | FOR <nom_variable> ':=' <expression> TO <expression> DO <instruction>
 
-arith-expr-tail : PLUS term arith-expr-tail
-                | MINUS term arith-expr-tail
-                | ε
+<procedure> ::= PROCEDURE <nom_procedure> ';' <bloc> END ';'
 
-term        : factor term-tail
+<fonction> ::= FUNCTION <nom_fonction> ':' <type> ';' <bloc> END ';'
 
-term-tail   : MUL factor term-tail
-            | DIV factor term-tail
-            | ε
+<expression> ::= <expression_arithmetique> | <expression_logique> | <nom_variable>
 
-factor      : PLUS factor 
-            | MINUS factor
-            | power
+<expression_arithmetique> ::= <expression> ('+' | '-' | '*' | '/') <expression> | <entier>
 
-power       : call power-tail
+<expression_logique> ::= <expression> ('AND' | 'OR' | 'NOT') <expression>
 
-power-tail  : POW factor power-tail
-            | ε
-
-call        : atom call-tail
-
-call-tail   : LPAREN expr call-tail-tail RPAREN
-            | ε
-
-call-tail-tail : COMMA expr call-tail-tail
-               | ε
-
-atom        : INT
-            | FLOAT
-            | STRING
-            | IDENTIFIER
-            | LPAREN expr RPAREN
-            | list-expr
-            | if-expr
-            | for-expr
-            | while-expr
-            | func-def
-
-list-expr   : LSQUARE list-expr-tail RSQUARE
-
-list-expr-tail : expr list-expr-tail-next
-               | ε
-
-list-expr-tail-next : COMMA expr list-expr-tail-next
-                    | ε
-
-if-expr     : KEYWORD:if expr KEYWORD:then statement if-expr-b if-expr-c
-            | NEWLINE statements KEYWORD:end if-expr-b if-expr-c
-
-if-expr-b   : KEYWORD:elseif expr KEYWORD:then statement if-expr-b if-expr-c
-            | NEWLINE statements KEYWORD:end if-expr-b if-expr-c
-            | ε
-
-if-expr-c   : KEYWORD:else statement
-            | NEWLINE statements KEYWORD:end
-            | ε
-
-for-expr    : KEYWORD:for IDENTIFIER EQ expr KEYWORD:to expr KEYWORD:step expr KEYWORD:do statement
-            | KEYWORD:for IDENTIFIER EQ expr KEYWORD:to expr KEYWORD:do statement
-            | NEWLINE statements KEYWORD:end
-
-while-expr  : KEYWORD:while expr KEYWORD:do statement
-            | NEWLINE statements KEYWORD:end
-
-func-def    : KEYWORD:function IDENTIFIER LPAREN func-def-params RPAREN ARROW expr
-            | KEYWORD:function LPAREN func-def-params RPAREN ARROW expr
-            | NEWLINE statements KEYWORD:end
-
-func-def-params : IDENTIFIER func-def-params-tail
-                | ε
-
-func-def-params-tail : COMMA IDENTIFIER func-def-params-tail
-                     | ε
+<type> ::= INTEGER | REAL | BOOLEAN
