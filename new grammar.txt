@@ -18,11 +18,11 @@ data_type : TOK_INT
           | TOK_VOID
           ;
 
-declarations : variable_declaration
+type_declarations : declaration
                  | type_declarations TOK_COMMA variable_declaration
                  ;
 
-variable_declaration : ident
+declaration : ident
                     | ident TOK_AFFECT expression
                     ;
 
