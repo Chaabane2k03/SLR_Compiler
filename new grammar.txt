@@ -65,14 +65,7 @@ expression : expression TOK_MUL expression
           | expression TOK_NE expression
           | expression TOK_AND expression
           | expression TOK_OR expression
-          | expression TOK_BAND expression
-          | expression TOK_BOR expression
-          | expression TOK_BXOR expression
-          | expression TOK_SRL expression
-          | expression TOK_SRA expression
-          | expression TOK_SLL expression
           | TOK_NOT expression
-          | TOK_BNOT expression
           | TOK_LPAR expression TOK_RPAR
           | ident TOK_AFFECT expression
           | TOK_INTVAL
