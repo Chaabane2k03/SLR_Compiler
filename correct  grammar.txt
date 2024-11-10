@@ -1,0 +1,93 @@
+P : DL_non_empty MF
+  | MF
+  ;
+
+DL : DL_non_empty
+   | 
+   ;
+
+DL_non_empty : VD
+             | DL_non_empty VD
+             ;
+
+VD : DT VDL SEMICOL
+   ;
+
+DT : INT
+   | BOOL
+   | VOID
+   ;
+
+VDL : D
+    | VDL COMMA D
+    ;
+
+D : I
+  | I AFFECT E
+  ;
+
+MF : DT I LPAREN RPAREN CB
+   ;
+
+SL : NSL
+   | 
+   ;
+
+NSL : S
+    | NSL S
+    ;
+
+S : E SEMICOL
+  | IF LPAREN E RPAREN S ELSE S
+  | IF LPAREN E RPAREN S
+  | WHILE LPAREN E RPAREN S
+  | FOR LPAREN E SEMICOL E SEMICOL E RPAREN S
+  | DO S WHILE LPAREN E RPAREN SEMICOL
+  | CB
+  | SEMICOL
+  | PRINT LPAREN PPL RPAREN SEMICOL
+  ;
+
+CB : LACC DL SL RACC
+   ;
+
+E : E MUL E
+  | E DIV E
+  | E PLUS E
+  | E MINUS E
+  | E MOD E
+  | E LT E
+  | E GT E
+  | MINUS E
+  | E GE E
+  | E LE E
+  | E EQ E
+  | E NE E
+  | E AND E
+  | E OR E
+  | E BAND E
+  | E BOR E
+  | E BXOR E
+  | E SRL E
+  | E SRA E
+  | E SLL E
+  | NOT E
+  | BNOT E
+  | LPAREN E RPAREN
+  | I AFFECT E
+  | INTVAL
+  | TRUE
+  | FALSE
+  | I
+  ;
+
+PPL : PPL COMMA PP
+    | PP
+    ;
+
+PP : I
+   | STRING
+   ;
+
+I : IDENT
+  ;
