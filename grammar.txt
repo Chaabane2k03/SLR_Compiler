@@ -7,50 +7,50 @@ statement   : KEYWORD:return expr
             | expr
 
 expr        : KEYWORD:var IDENTIFIER EQ expr
-            | comp-expr expr-tail
+            | comp-expr logical-expr-extension
 
-expr-tail   : KEYWORD:and comp-expr expr-tail
-            | KEYWORD:or comp-expr expr-tail
-            | ε
+logical-expr-extension : KEYWORD:and comp-expr logical-expr-extension
+                       | KEYWORD:or comp-expr logical-expr-extension
+                       | ε
 
 comp-expr   : not comp-expr
-            | arith-expr comp-expr-tail
+            | arith-expr comparison-extension
 
-comp-expr-tail : EE arith-expr comp-expr-tail
-               | LT arith-expr comp-expr-tail
-               | GT arith-expr comp-expr-tail
-               | LTE arith-expr comp-expr-tail
-               | GTE arith-expr comp-expr-tail
-               | ε
+comparison-extension : EE arith-expr comparison-extension
+                     | LT arith-expr comparison-extension
+                     | GT arith-expr comparison-extension
+                     | LTE arith-expr comparison-extension
+                     | GTE arith-expr comparison-extension
+                     | ε
 
-arith-expr  : term arith-expr-tail
+arith-expr  : term arithmetic-extension
 
-arith-expr-tail : PLUS term arith-expr-tail
-                | MINUS term arith-expr-tail
-                | ε
+arithmetic-extension : PLUS term arithmetic-extension
+                     | MINUS term arithmetic-extension
+                     | ε
 
-term        : factor term-tail
+term        : factor multiplicative-extension
 
-term-tail   : MUL factor term-tail
-            | DIV factor term-tail
-            | ε
+multiplicative-extension : MUL factor multiplicative-extension
+                         | DIV factor multiplicative-extension
+                         | ε
 
 factor      : PLUS factor 
             | MINUS factor
             | power
 
-power       : call power-tail
+power       : call exponentiation-extension
 
-power-tail  : POW factor power-tail
-            | ε
+exponentiation-extension : POW factor exponentiation-extension
+                         | ε
 
-call        : atom call-tail
+call        : atom function-call-extension
 
-call-tail   : LPAREN expr call-tail-tail RPAREN
-            | ε
+function-call-extension : LPAREN expr argument-list-extension RPAREN
+                        | ε
 
-call-tail-tail : COMMA expr call-tail-tail
-               | ε
+argument-list-extension : COMMA expr argument-list-extension
+                        | ε
 
 atom        : INT
             | FLOAT
@@ -63,13 +63,13 @@ atom        : INT
             | while-expr
             | func-def
 
-list-expr   : LSQUARE list-expr-tail RSQUARE
+list-expr   : LSQUARE list-elements RSQUARE
 
-list-expr-tail : expr list-expr-tail-next
-               | ε
+list-elements : expr list-elements-continuation
+              | ε
 
-list-expr-tail-next : COMMA expr list-expr-tail-next
-                    | ε
+list-elements-continuation : COMMA expr list-elements-continuation
+                           | ε
 
 if-expr     : KEYWORD:if expr KEYWORD:then statement if-expr-b if-expr-c
             | NEWLINE statements KEYWORD:end if-expr-b if-expr-c
@@ -93,8 +93,8 @@ func-def    : KEYWORD:function IDENTIFIER LPAREN func-def-params RPAREN ARROW ex
             | KEYWORD:function LPAREN func-def-params RPAREN ARROW expr
             | NEWLINE statements KEYWORD:end
 
-func-def-params : IDENTIFIER func-def-params-tail
+func-def-params : IDENTIFIER additional-params
                 | ε
 
-func-def-params-tail : COMMA IDENTIFIER func-def-params-tail
-                     | ε
+additional-params : COMMA IDENTIFIER additional-params
+                  | ε
