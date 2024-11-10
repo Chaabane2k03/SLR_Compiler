@@ -19,7 +19,7 @@ data_type : TOK_INT
           ;
 
 type_declarations : declaration
-                 | type_declarations TOK_COMMA variable_declaration
+                 | type_declarations TOK_COMMA declaration
                  ;
 
 declaration : ident
