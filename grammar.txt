@@ -18,9 +18,9 @@
 
 <fonction> ::= FUNCTION <identifier> ':' <type> ';' <bloc> END ';'
 
-<expression> ::= <entier> | <identifier> | <expression_arithmetique> | <expression_logique>
+<expression> ::= INTEGER | <identifier> | <expression_arithmetique> | <expression_logique>
 
-<expression_arithmetique> ::= <expression> OPARTH <expression> | <entier>
+<expression_arithmetique> ::= <expression> OPARTH <expression> | INTEGER
 
 <expression_logique> ::= <expression> OPLOG <expression> | 'NOT' <expression>
 
@@ -35,33 +35,34 @@
 
 FIRST(<programme>) = { PROGRAM }
 FIRST(<bloc>) = { VAR }
-FIRST(<instructions>) = { ε , <identifier> , IF , WHILE , FOR , PROCEDURE , FONCTION}
-FIRST(<declaration_variable>) = { <identifier> }
+FIRST(<instructions>) = { ε , <identifier> , IF , WHILE , FOR , PROCEDURE , FUNCTION}
+FIRST(<declaration_variable>) = { <identifier> , ε }
 FIRST(<instruction>) = { <identifier> , IF , WHILE , FOR , PROCEDURE , FONCTION }
 FIRST(<assignation>) = {<identifier>}
 FIRST(<condition>) = { IF }
 FIRST(<boucle>) = { WHILE, FOR }
 FIRST(<procedure>) = { PROCEDURE }
 FIRST(<fonction>) = { FUNCTION }
-FIRST(<expression>) = { <entier> , <identifier>  }
-FIRST(<expression_arithmetique>) = { <entier> , <identifier> }
-FIRST(<expression_logique>) = { <entier> , <identifier> , NON}
+FIRST(<expression>) = { INTEGER , <identifier>  }
+FIRST(<expression_arithmetique>) = { INTEGER , <identifier> }
+FIRST(<expression_logique>) = { INTEGER , <identifier> , NOT}
 FIRST(<type>) = { INTEGER , REAL , BOOLEAN }
-FIRST(<identifier>) = { <letter> }
+FIRST(<identifier>) = { ID }
+
 -----------------------------------------------------------------
 FOLLOW(<programme>) = { $ }
 FOLLOW(<bloc>) = { . , END }
 FOLLOW(<instructions>) = { END , ELSE , ; }
-FOLLOW(<declaration_variable>) = { BEGIN , <identifier> }
+FOLLOW(<declaration_variable>) = { BEGIN }
 FOLLOW(<instruction>) = { ; }
 FOLLOW(<assignation>) = { ; }
 FOLLOW(<condition>) = { ; }
 FOLLOW(<boucle>) = { ; }
 FOLLOW(<procedure>) = { ; }
 FOLLOW(<fonction>) = { ; }
-FOLLOW(<expression>) = { ; , THEN , TO , DO , + , -, * , / , AND , OR}
-FOLLOW(<expression_arithmetique>) = { ; , THEN , TO , DO , + , -, * , / , AND , OR }
-FOLLOW(<expression_logique>) = { ; , THEN , TO , DO , + , -, * , / , AND , OR}
-FOLLOW(<type>) = { ;}
-FOLLOW(<identifier>) = {; , : , := , }
+FOLLOW(<expression>) = { ; , THEN , TO , DO , OPARTH, OPLOG}
+FOLLOW(<expression_arithmetique>) = { ; , THEN , TO , DO ,OPARTH , OPLOG }
+FOLLOW(<expression_logique>) = { ; , THEN , TO , DO , OPARTH , OPLOG}
+FOLLOW(<type>) = {;}
+FOLLOW(<identifier>) = {; , : , := , ; , THEN , TO , DO , OPARTH, OPLOG }
 -----------------------------------------------------------------
