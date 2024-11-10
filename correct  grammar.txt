@@ -3,7 +3,7 @@ P : DL_non_empty MF
   ;
 
 DL : DL_non_empty
-   | 
+   | ε
    ;
 
 DL_non_empty : VD
@@ -30,7 +30,7 @@ MF : DT I LPAREN RPAREN CB
    ;
 
 SL : NSL
-   | 
+   | ε
    ;
 
 NSL : S
