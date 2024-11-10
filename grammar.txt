@@ -20,37 +20,19 @@
 
 <expression> ::= <entier> | <identifier> | <expression_arithmetique> | <expression_logique>
 
-<expression_arithmetique> ::= <expression> ('+' | '-' | '*' | '/') <expression> | <entier>
+<expression_arithmetique> ::= <expression> OPARTH <expression> | <entier>
 
-<expression_logique> ::= <expression> ('AND' | 'OR') <expression> | 'NOT' <expression>
+<expression_logique> ::= <expression> OPLOG <expression> | 'NOT' <expression>
 
 <type> ::= INTEGER | REAL | BOOLEAN
 
-<identifier> ::= <letter> (<letter> | <digit>)*
-<letter> ::= 'a' | 'b' | ... | 'z' | 'A' | 'B' | ... | 'Z'
-<digit> ::= '0' | '1' | ... | '9'
-
------------------------------------------------------------------
+<identifier> ::=  ID 
+<OPRAL> ::= + | - | * | /
+<OPLOG> ::= AND | OR
 
 
-FOLLOW(<programme>) = { $ }
-FOLLOW(<bloc>) = { . , END }
-FOLLOW(<instructions>) = { END , ELSE , suivant(<boucle>) , suivant(<condition> , )}
-FOLLOW(<declaration_variable>) = { BEGIN , <identifier> }
-FOLLOW(<instruction>) = { ; }
-FOLLOW(<assignation>) = { ; }
-FOLLOW(<condition>) = { ; }
-FOLLOW(<boucle>) = { ; }
-FOLLOW(<procedure>) = { ; }
-FOLLOW(<fonction>) = { ; }
-FOLLOW(<expression>) = { ; , THEN , TO , DO , + , -, * , / , AND , OR}
-FOLLOW(<expression_arithmetique>) = { ; , THEN , TO , DO , + , -, * , / , AND , OR }
-FOLLOW(<expression_logique>) = { ; , THEN , TO , DO , + , -, * , / , AND , OR}
-FOLLOW(<type>) = { ;}
-FOLLOW(<identifier>) = {; , : , := , }
 
 
------------------------------------------------------------------
 FIRST(<programme>) = { PROGRAM }
 FIRST(<bloc>) = { VAR }
 FIRST(<instructions>) = { ε , <identifier> , IF , WHILE , FOR , PROCEDURE , FONCTION}
@@ -66,5 +48,20 @@ FIRST(<expression_arithmetique>) = { <entier> , <identifier> }
 FIRST(<expression_logique>) = { <entier> , <identifier> , NON}
 FIRST(<type>) = { INTEGER , REAL , BOOLEAN }
 FIRST(<identifier>) = { <letter> }
-
-
+-----------------------------------------------------------------
+FOLLOW(<programme>) = { $ }
+FOLLOW(<bloc>) = { . , END }
+FOLLOW(<instructions>) = { END , ELSE , ; }
+FOLLOW(<declaration_variable>) = { BEGIN , <identifier> }
+FOLLOW(<instruction>) = { ; }
+FOLLOW(<assignation>) = { ; }
+FOLLOW(<condition>) = { ; }
+FOLLOW(<boucle>) = { ; }
+FOLLOW(<procedure>) = { ; }
+FOLLOW(<fonction>) = { ; }
+FOLLOW(<expression>) = { ; , THEN , TO , DO , + , -, * , / , AND , OR}
+FOLLOW(<expression_arithmetique>) = { ; , THEN , TO , DO , + , -, * , / , AND , OR }
+FOLLOW(<expression_logique>) = { ; , THEN , TO , DO , + , -, * , / , AND , OR}
+FOLLOW(<type>) = { ;}
+FOLLOW(<identifier>) = {; , : , := , }
+-----------------------------------------------------------------
