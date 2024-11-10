@@ -1,0 +1,86 @@
+program_declaration : declaration_list_non_empty main_function_declaration
+                    | main_function_declaration
+                    ;
+
+declaration_list : declaration_list_non_empty
+                 | 
+                 ;
+
+declaration_list_non_empty : variable_declaration
+                           | declaration_list_non_empty variable_declaration
+                           ;
+
+variable_declaration : data_type type_declarations TOK_SEMICOL
+                    ;
+
+data_type : TOK_INT
+          | TOK_BOOL
+          | TOK_VOID
+          ;
+
+type_declarations : declaration
+                 | type_declarations TOK_COMMA declaration
+                 ;
+
+declaration : ident
+                    | ident TOK_AFFECT expression
+                    ;
+
+main_function_declaration : data_type ident TOK_LPAR TOK_RPAR code_block
+                           ;
+
+statement_list : non_empty_statement_list
+               | 
+               ;
+
+non_empty_statement_list : statement
+                         | non_empty_statement_list statement
+                         ;
+
+statement : expression TOK_SEMICOL
+          | TOK_IF TOK_LPAR expression TOK_RPAR statement TOK_ELSE statement
+          | TOK_IF TOK_LPAR expression TOK_RPAR statement
+          | TOK_WHILE TOK_LPAR expression TOK_RPAR statement
+          | TOK_FOR TOK_LPAR expression TOK_SEMICOL expression TOK_SEMICOL expression TOK_RPAR statement
+          | TOK_DO statement TOK_WHILE TOK_LPAR expression TOK_RPAR TOK_SEMICOL
+          | code_block
+          | TOK_SEMICOL
+          | TOK_PRINT TOK_LPAR print_parameter_list TOK_RPAR TOK_SEMICOL
+          ;
+
+code_block : TOK_LACC declaration_list statement_list TOK_RACC
+           ;
+
+expression : expression TOK_MUL expression
+          | expression TOK_DIV expression
+          | expression TOK_PLUS expression
+          | expression TOK_MINUS expression
+          | expression TOK_MOD expression
+          | expression TOK_LT expression
+          | expression TOK_GT expression
+          | TOK_MINUS expression
+          | expression TOK_GE expression
+          | expression TOK_LE expression
+          | expression TOK_EQ expression
+          | expression TOK_NE expression
+          | expression TOK_AND expression
+          | expression TOK_OR expression
+          | TOK_NOT expression
+          | TOK_LPAR expression TOK_RPAR
+          | ident TOK_AFFECT expression
+          | TOK_INTVAL
+          | TOK_TRUE
+          | TOK_FALSE
+          | ident
+          ;
+
+print_parameter_list : print_parameter_list TOK_COMMA print_parameter
+                    | print_parameter
+                    ;
+
+print_parameter : ident
+               | TOK_STRING
+               ;
+
+ident : TOK_IDENT
+      ;
