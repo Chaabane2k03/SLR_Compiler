@@ -31,70 +31,19 @@
 <OPLOG> ::= AND | OR
 
 
-
-
-FIRST(<programme>) = { PROGRAM }
-FIRST(<bloc>) = { VAR }
-FIRST(<instructions>) = { ε , <identifier> , IF , WHILE , FOR , PROCEDURE , FUNCTION}
-FIRST(<declaration_variable>) = { <identifier> , ε }
-FIRST(<instruction>) = { <identifier> , IF , WHILE , FOR , PROCEDURE , FONCTION }
-FIRST(<assignation>) = {<identifier>}
-FIRST(<condition>) = { IF }
-FIRST(<boucle>) = { WHILE, FOR }
-FIRST(<procedure>) = { PROCEDURE }
-FIRST(<fonction>) = { FUNCTION }
-FIRST(<expression>) = { INTEGER , <identifier>  }
-FIRST(<expression_arithmetique>) = { INTEGER , <identifier> }
-FIRST(<expression_logique>) = { INTEGER , <identifier> , NOT}
-FIRST(<type>) = { INTEGER , REAL , BOOLEAN }
-FIRST(<identifier>) = { ID }
-
------------------------------------------------------------------
-FOLLOW(<programme>) = { $ }
-FOLLOW(<bloc>) = { . , END }
-FOLLOW(<instructions>) = { END , ELSE , ; }
-FOLLOW(<declaration_variable>) = { BEGIN }
-FOLLOW(<instruction>) = { ; }
-FOLLOW(<assignation>) = { ; }
-FOLLOW(<condition>) = { ; }
-FOLLOW(<boucle>) = { ; }
-FOLLOW(<procedure>) = { ; }
-FOLLOW(<fonction>) = { ; }
-FOLLOW(<expression>) = { ; , THEN , TO , DO , OPARTH, OPLOG}
-FOLLOW(<expression_arithmetique>) = { ; , THEN , TO , DO ,OPARTH , OPLOG }
-FOLLOW(<expression_logique>) = { ; , THEN , TO , DO , OPARTH , OPLOG}
-FOLLOW(<type>) = {;}
-FOLLOW(<identifier>) = {; , : , := , ; , THEN , TO , DO , OPARTH, OPLOG }
------------------------------------------------------------------
-
-
-
 PR ::= PROGRAM ID ';' B '.'
-
 B ::= VAR D BEGIN I END
-
 I ::= A ';' I | ε
-
 D ::= ID ':' T ';' D | ε
-
 A ::= ID ':=' Ex
-
 C ::= IF Ex THEN I | IF Ex THEN I ELSE I
-
 L ::= WHILE Ex DO I | FOR ID ':=' Ex TO Ex DO I
-
 P ::= PROCEDURE ID ';' B END ';'
-
 F ::= FUNCTION ID ':' T ';' B END ';'
-
 Ex ::= INTEGER | ID | EA | EL
-
 EA ::= Ex OPARTH Ex | INTEGER
-
 EL ::= Ex OPLOG Ex | 'NOT' Ex
-
 T ::= INTEGER | REAL | BOOLEAN
-
 ID ::= IDENT
 
 
@@ -104,68 +53,12 @@ ID ::= IDENT
 SLR : 
 -> Grammaire augmentée
 
-PR' ::= PR
-
-PR ::= PROGRAM ID ';' B '.'
-
-B ::= VAR D BEGIN I END
-
-I ::= A ';' I | ε
-
-D ::= ID ':' T ';' D | ε
-
-A ::= ID ':=' Ex
-
-C ::= IF Ex THEN I | IF Ex THEN I ELSE I
-
-L ::= WHILE Ex DO I | FOR ID ':=' Ex TO Ex DO I
-
-P ::= PROCEDURE ID ';' B END ';'
-
-F ::= FUNCTION ID ':' T ';' B END ';'
-
-Ex ::= INTEGER | ID | EA | EL
-
-EA ::= Ex OPARTH Ex | INTEGER
-
-EL ::= Ex OPLOG Ex | 'NOT' Ex
-
-T ::= INTEGER | REAL | BOOLEAN
-
-ID ::= IDENT
 
 
 
 
-I0 = ferm{PR' ::= .PR} = {PR' ::= .PR , PR ::= .PROGRAM ID ';' B '.'}
-Δ(I0 , PR) = {PR' ::= PR. } = I1 ****
-Δ(I0 , PROGRAM) = {PR ::= PROGRAM .ID ';' B '.', ID ::= .IDENT} = I2 
-Δ(I2, ID) = {PR ::= PROGRAM ID .';' B '.'} = I3 
-Δ(I2 , IDENT) = {ID ::= IDENT.} = I4****
-Δ(I3 , ;) = {PR ::= PROGRAM ID ';' . B '.' , B ::= .VAR D BEGIN I END} = I5
-Δ(I5 , B) = {PR ::= PROGRAM ID ';' B . '.' } = I6
-Δ(I5 , VAR) = {B ::= VAR .D BEGIN I END , D ::= .ID ':' T ';' D | .ε , ID ::= .IDENT} = I7
-Δ(I6 , '.' ) = {PR ::= PROGRAM ID ';' B  '.' . } = I8 *******
-Δ(I7 , D) = {B ::= VAR D .BEGIN I END} = I9
-Δ(I7 , ID) = {D ::= ID .':' T ';' D } = I10
-Δ(I7 , ε) = {D ::= ε.} = I11 ******
-Δ(I7 , IDENT) = {ID ::= IDENT.} = I4****
-Δ(I9 , BEGIN) = {B ::= VAR D BEGIN .I END , I ::= .A ';' I | .ε , A ::= .ID ':=' Ex , ID ::= .IDENT} = I12
-Δ(I12 , I) = {B ::= VAR D BEGIN I .END} = I13
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
-Δ(I12 , ) = {} = 
+
+
 
 
 

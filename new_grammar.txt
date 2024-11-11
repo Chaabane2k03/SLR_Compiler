@@ -1,0 +1,63 @@
+P -> DLN MF
+P -> MF 
+
+DL -> DLN
+DL -> " 
+
+DLN -> VD
+DLN -> DLN VD
+             
+
+VD -> DT VDL ;
+
+DT -> INT
+DT -> BOOL
+DT -> VOID
+
+VDL -> D
+VDL -> VDL COMMA D
+
+
+D -> I
+D -> I AFFECT E
+
+MF -> DT I ( ) CB
+
+SL -> NSL
+SL -> "
+
+
+NSL -> S
+NSL -> NSL S
+    
+
+S -> E ;
+S -> IF ( E ) S
+S -> WHILE ( E ) S
+S -> CB
+S -> ;
+S -> PRINT ( PPL ) ;
+  
+
+CB -> LACC DL SL RACC
+   
+
+E -> I OP E
+E -> ( E )
+E -> I AFFECT E
+E -> INTVAL
+E -> TRUE
+E -> FALSE
+E -> I
+  
+
+PPL -> PPL COMMA PP
+PPL -> PP
+    
+
+PP -> I
+PP -> STRING
+   
+
+I -> IDENT
+  
