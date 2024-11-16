@@ -1,0 +1,37 @@
+P -> LD debut LI fin
+LD ->D
+LD ->D LD
+D -> T id ;
+T -> entier
+T -> réel
+T -> BOOL
+T -> chaine
+LI -> I ;
+LI -> I ; LI
+I -> A
+I -> L
+I -> EC
+I -> C
+I -> B
+A -> id <- EX
+L -> lire id
+EC -> afficher id
+EC -> afficher ( chaine )
+C -> si ( EX ) alors LI sinon LI finsi 
+C -> si ( EX ) alors LI finsi
+B -> tantque ( EX ) faire LI fintq
+EX -> id OP id
+EX -> ID
+BOOL -> Vrai
+BOOL -> Faux
+OP -> OPARTH
+OP -> OPLOG
+OPARTH -> +
+OPARTH -> -
+OPARTH -> *
+OPARTH -> /
+OPLOG -> <
+OPLOG -> >
+OPLOG -> =
+OPLOG -> et
+OPLOG -> ou
