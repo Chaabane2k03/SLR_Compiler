@@ -10,4 +10,24 @@
         <maven.compiler.release>23</maven.compiler.release>
         <exec.mainClass>com.mycompany.compilerigl3.CompilerIGL3</exec.mainClass>
     </properties>
+    <dependencies>
+        
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <version>1.18.32</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version> <!-- Or whatever JUnit you're using. -->
+        </dependency>
+        
+        
+        
+        
+    </dependencies>
+    
 </project>
