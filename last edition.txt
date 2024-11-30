@@ -21,7 +21,7 @@ C -> si ( EX ) alors LI sinon LI finsi
 C -> si ( EX ) alors LI finsi
 B -> tantque ( EX ) faire LI fintq
 EX -> id OP id
-EX -> ID
+EX -> id
 BOOL -> Vrai
 BOOL -> Faux
 OP -> OPARTH
