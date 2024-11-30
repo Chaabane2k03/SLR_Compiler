@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.mycompany.compilerigl3;
 
 import com.mycompany.compilerigl3.Token.Token;
