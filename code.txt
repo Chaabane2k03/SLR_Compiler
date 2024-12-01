@@ -1,4 +1,5 @@
 entier x;
 debut
-x<-x;
+x <-   x  ;
 fin
+ 
