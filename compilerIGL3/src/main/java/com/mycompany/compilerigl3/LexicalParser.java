@@ -59,7 +59,7 @@ public class LexicalParser {
                 }
             }
         }
-        tokens.add(new Token(TokenType.EOF,"",rowNumber));
+        tokens.add(new Token(TokenType.EOF,"$",rowNumber));
         return tokens;
     }
     

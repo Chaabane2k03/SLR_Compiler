@@ -11,6 +11,6 @@ public class SLR {
         parser.ouput();
 
         // Test parsing the input
-        parser.analyzeSLnew(tokens);
+       // parser.analyzeSLnew(tokens);
     }
 }
