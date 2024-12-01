@@ -1,6 +1,12 @@
 package com.mycompany.compilerigl3.slr;
 
+import com.mycompany.compilerigl3.Token.Token;
+import com.mycompany.compilerigl3.Token.TokenType;
+
+
 import java.util.Stack;
+import java.util.List; 
+
 
 public class Parsernew {
 
@@ -134,24 +140,29 @@ public String[][] tableSLR =
     int index = 0;
 
     
-    public void analyzeSLnew(String []tt) {
+    public void analyzeSLnew(List<Token> token) {
     	
         action = "";
         index = 0;
        
         analyse.push("0");
         
-       
         System.out.println("********pile     	    Entrée            Action***********");
-        this.AfficherSLRnew(tt);
-    
-       while(index<tt.length) 
+        this.AfficherSLRnew(token);
+        String tt;
+       while(index<token.size()) 
         
         {
-         
+            if (token.get(index).getType() == TokenType.ID)
+            {
+                tt = "id";
+            }else
+            {
+                tt = token.get(index).getValue();
+            }
             String s = analyse.peek();
             
-            String act=Action(s,tt[index]);
+            String act=Action(s,tt);
                       System.out.println(act);
 
             if (act.charAt(0) == 's') {
@@ -160,8 +171,8 @@ public String[][] tableSLR =
                 //stackState.push(Action(s, ch[index]).substring(1));
                 //stackSymbol.push(ch[index]);
                 
-                analyse.push(tt[index]);
-                analyse.push(Action(s, tt[index]).substring(1));
+                analyse.push(tt);
+                analyse.push(act.substring(1));
                
                 
                 
@@ -169,7 +180,7 @@ public String[][] tableSLR =
                 index++;
                 action = "shift ";
                 
-                AfficherSLRnew(tt);
+                AfficherSLRnew(token);
             }
             // Réduction
             else if (act.charAt(0) == 'r') {
@@ -203,7 +214,7 @@ public String[][] tableSLR =
                 
                
                 action = "reduce:" + str;
-                AfficherSLRnew(tt);
+                AfficherSLRnew(token);
             } 
             //acceptation
             else if ("Accept".equals(act))
@@ -236,7 +247,7 @@ public String[][] tableSLR =
         return "err";
     }
 
-    public void AfficherSLRnew(String []tt) {
+    public void AfficherSLRnew(List<Token>token) {
         //  SLR
     	
     	
@@ -246,7 +257,7 @@ public String[][] tableSLR =
     	int taillepilediv2= taillepile /2;
          for(int i=0;i<taillepilediv2;i++)
      		ss=ss + "-------" ;
-         int tailleinput=tt.length;
+         int tailleinput=token.size();
          for(int i=0;i<tailleinput;i++)
      		ss1=ss1 + "-------" ;
     	
@@ -255,8 +266,8 @@ public String[][] tableSLR =
         
        
         strInput="";
-        for(int i=index; i<tt.length;i++)
-        	strInput= strInput+ tt[i];
+        for(int i=index; i<tailleinput;i++)
+        	strInput= strInput+ token.get(i).getValue()+" ";
        
         System.out.printf("%s", analyse + ss1);
         System.out.printf("%s", strInput+ ss);

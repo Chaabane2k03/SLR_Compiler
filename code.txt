@@ -1,0 +1,4 @@
+entier x;
+debut
+x<-x;
+fin
