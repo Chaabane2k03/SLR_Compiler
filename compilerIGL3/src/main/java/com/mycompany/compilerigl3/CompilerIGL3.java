@@ -22,16 +22,21 @@ public class CompilerIGL3 {
         
         String file_name = args[0];
         Scanner scanner = new Scanner(file_name);
-        //Scanner scanner = new Scanner("D:\\abdo\\code\\java project\\compiler\\comp\\code.txt");
 
         String code = scanner.toString();
-        LexicalParser lexer = new LexicalParser(code);
+        LexicalParser lexer = new LexicalParser(code);        
+        
+        
         List<Token> tokens = lexer.parse();
-        /*
+                
+        System.out.println("*********************ANALYSE LEXICALE************************");
+
         for (Token token : tokens) {
             System.out.println(token);
-        }*/
+        }
         
+        System.out.println("*********************ANALYSE SYNTAXIQUE****************");
+
         Parsernew parser = new Parsernew();
         parser.analyzeSLnew(tokens);
 
