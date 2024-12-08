@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.compilerigl3.Token;
+import exception.LexicalException;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.Getter;
@@ -93,7 +94,7 @@ public class TokenReader {
             case '=' -> {
                 return new Token(TokenType.EGAL, "=", rowNumber);
             }
-            default -> throw new RuntimeException("Erreur lexicale : opérateur inconnu '" + currentChar + "'");
+            default -> throw new LexicalException("Erreur lexicale : opérateur inconnu '" + currentChar + "'");
         }
     }
     
@@ -110,7 +111,7 @@ public class TokenReader {
             case ')' -> {
                 return new Token(TokenType.PARENTHESE_FERMANTE, ")", rowNumber);
             }
-            default -> throw new RuntimeException("Erreur lexicale : symbole de ponctuation inconnu '" + currentChar + "'");
+            default -> throw new LexicalException("Erreur lexicale (ligne : " + rowNumber + " ) : symbole de ponctuation inconnu '" + currentChar + "'");
         }
     }
 

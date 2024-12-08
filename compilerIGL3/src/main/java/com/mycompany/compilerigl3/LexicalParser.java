@@ -2,6 +2,7 @@
 package com.mycompany.compilerigl3;
 
 import com.mycompany.compilerigl3.Token.*;
+import exception.LexicalException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +55,7 @@ public class LexicalParser {
                         position = tokenReader.getPosition();
                         tokens.add(token);
                     } else {
-                        throw new RuntimeException("Erreur lexicale à la ligne " + rowNumber + " : caractère inconnu '" + currentChar + "'");
+                        throw new LexicalException(String.format("Erreur (ligne : %d) : Expression Invalide", rowNumber));
                     }
                 }
             }

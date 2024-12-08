@@ -251,15 +251,15 @@ public String[][] tableSLR =
         //  SLR
     	
     	
-    	String ss= "-------";
-    	String ss1= "-------";
+    	String ss= "----";
+    	String ss1= "----";
     	 int taillepile=analyse.size();
     	int taillepilediv2= taillepile /2;
          for(int i=0;i<taillepilediv2;i++)
-     		ss=ss + "-------" ;
+     		ss=ss + "----" ;
          int tailleinput=token.size();
          for(int i=0;i<tailleinput;i++)
-     		ss1=ss1 + "-------" ;
+     		ss1=ss1 + "----" ;
     	
     	
     	
