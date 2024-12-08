@@ -163,8 +163,6 @@ public String[][] tableSLR =
             String s = analyse.peek();
             
             String act=Action(s,tt);
-                      System.out.println(act);
-
             if (act.charAt(0) == 's') {
             	
             	
@@ -178,7 +176,7 @@ public String[][] tableSLR =
                 
               
                 index++;
-                action = "shift ";
+                action = "shift: "+ act;
                 
                 AfficherSLRnew(token);
             }
@@ -213,7 +211,7 @@ public String[][] tableSLR =
                 analyse.push(Action(sommetpile, Partiegauche));
                 
                
-                action = "reduce:" + str;
+                action = "reduce: "+act+": "+ str;
                 AfficherSLRnew(token);
             } 
             //acceptation
