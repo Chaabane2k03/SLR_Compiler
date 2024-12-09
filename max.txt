@@ -1,0 +1,14 @@
+entier x ;
+entier y ;
+entier max ;
+debut
+      lire x ;
+      lire y ;
+      si ( x > y ) alors
+          max <- x ;
+      sinon
+          max <- y ;
+      finsi ;
+      afficher max ;
+fin
+
